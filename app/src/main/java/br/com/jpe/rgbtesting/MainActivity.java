@@ -4,23 +4,30 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
-import android.widget.Toast;
+import android.widget.TextView;
 
+import br.com.jpe.rgbtesting.core.ActivityConstants;
 import br.com.jpe.rgbtesting.core.ColorConstants;
 import br.com.jpe.rgbtesting.core.ColorSeekBarEventListener;
+import br.com.jpe.rgbtesting.core.ui.SpannableStringBuilder;
 
-public class MainActivity extends AppCompatActivity implements ColorConstants {
+public class MainActivity extends AppCompatActivity implements
+        ColorConstants, ActivityConstants {
 
     SeekBar seekBar_Red;
     SeekBar seekBar_Green;
     SeekBar seekBar_Blue;
 
+    TextView tv_selectColor;
     Button bt_ChangeActivity;
+    FloatingActionButton fab_Contact;
 
     Integer colorValue_Red = 0;
     Integer colorValue_Green = 0;
@@ -35,7 +42,12 @@ public class MainActivity extends AppCompatActivity implements ColorConstants {
         seekBar_Green = findViewById(R.id.sb_Green);
         seekBar_Blue = findViewById(R.id.sb_Blue);
 
+        tv_selectColor = findViewById(R.id.tv_selectColor);
         bt_ChangeActivity = findViewById(R.id.bt_ChangeActivity);
+        fab_Contact = findViewById(R.id.fab_Contact);
+
+        tv_selectColor.setText(SpannableStringBuilder.create(getString(R.string.select_color)).
+                size(2f).color(getColor(R.color.colorPrimaryDark)).build());
 
         seekBar_Red.setProgress(colorValue_Red);
         seekBar_Green.setProgress(colorValue_Green);
@@ -75,13 +87,22 @@ public class MainActivity extends AppCompatActivity implements ColorConstants {
         it.putExtra(COLOR_R, colorValue_Red);
         it.putExtra(COLOR_G, colorValue_Green);
         it.putExtra(COLOR_B, colorValue_Blue);
-        startActivity(it);
+        startActivityForResult(it, ID_MAIN_ACTIVITY);
+    }
+
+    public void onClickFloatActionButton(View v){
+        Intent it = new Intent(this, ContactActivity.class);
+        startActivityForResult(it, ID_MAIN_ACTIVITY);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        updateButtonColor();
+        if (resultCode == ID_CHANGE_COLOR_ACTIVITY){
+            updateButtonColor();
+        } else if(resultCode == ID_CONTACT_ACTIVITY){
+            Snackbar.make(fab_Contact, getString(R.string.thanks_for_using), Snackbar.LENGTH_LONG).show();
+        }
     }
 
     private void updateButtonColor(){
