@@ -4,9 +4,12 @@ import android.widget.SeekBar;
 
 public abstract class ColorSeekBarEventListener implements  SeekBar.OnSeekBarChangeListener {
 
-    public abstract void run(Integer progress);
+    public abstract void run(Integer value);
+
     @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {run(progress);}
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        run(progress);
+    }
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {}

@@ -2,6 +2,7 @@ package br.com.jpe.rgbtesting;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,6 +40,10 @@ public class MainActivity extends AppCompatActivity implements ColorConstants {
         seekBar_Red.setProgress(colorValue_Red);
         seekBar_Green.setProgress(colorValue_Green);
         seekBar_Blue.setProgress(colorValue_Blue);
+
+        seekBar_Red.getProgressDrawable().setColorFilter(0xFFFF0000, PorterDuff.Mode.MULTIPLY);
+        seekBar_Green.getProgressDrawable().setColorFilter(0xFF00FF00, PorterDuff.Mode.MULTIPLY);
+        seekBar_Blue.getProgressDrawable().setColorFilter(0xFF0000FF, PorterDuff.Mode.MULTIPLY);
 
         seekBar_Red.setOnSeekBarChangeListener(new ColorSeekBarEventListener(){
             @Override
