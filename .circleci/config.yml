@@ -40,6 +40,11 @@ jobs:
       - store_artifacts:
           path: app/build/outputs/apk/
           destination: apks/
+      # Publish a release on github
+      - run:
+          name: Publish release on github
+          command: |
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete 1.0.0 ./artifacts/
 #
 # References:
 # https://medium.com/@farukcankaya/android-automated-build-with-circle-ci-ded9c0a4d931
