@@ -44,6 +44,7 @@ jobs:
       - run:
           name: Publish release on github
           command: |
+            go get github.com/tcnksm/ghr
             ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete 1.0.0 ./artifacts/
 #
 # References:
