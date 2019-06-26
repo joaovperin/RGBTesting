@@ -44,6 +44,9 @@ jobs:
       - run:
           name: Publish release on github
           command: |
+            uname -a
+            apt-get update
+            apt-get install golang-go
             go get github.com/tcnksm/ghr
             ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete 1.0.0 ./artifacts/
 #
